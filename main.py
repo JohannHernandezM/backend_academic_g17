@@ -2,18 +2,26 @@ import json
 
 from flask import Flask
 from flask import jsonify
-from flask import request
 from flask_cors import CORS
 from waitress import serve
 
+from blueprints.courseBlueprints import course_blueprints
+from blueprints.departmentBlueprints import department_blueprints
+from blueprints.enrollmentBlueprints import enrollment_blueprints
+from blueprints.studentBlueprints import student_blueprints
 
 app = Flask(__name__)
 cors = CORS(app)
+app.register_blueprint(course_blueprints)
+app.register_blueprint(department_blueprints)
+app.register_blueprint(enrollment_blueprints)
+app.register_blueprint(student_blueprints)
+
 
 @app.route("/", methods=['GET'])
 def home():
-    json_ = {"message": "Welcome to the academic microservices..."}
-    return json_
+    response = {"message": "Welcome to the academic microservices in G17..."}
+    return jsonify(response)
 
 
 # Config and execute app
